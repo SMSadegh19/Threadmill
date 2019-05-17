@@ -14,20 +14,14 @@ public class Writer extends Thread {
 
     @Override
     public void run() {
-        while (true) {
-            writeInFile();
+        for (int i = 0; i < 100; i++) {
+            Writer.writeInFile(number, getNextToWrite());
             try {
                 Thread.sleep(200);
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
         }
-    }
-
-    private void writeInFile() {
-        String toWrite = getNextToWrite();
-        // TODO: 5/17/19
-        System.out.println("I wrote: \"" + toWrite + "\"");
     }
 
     private String getNextToWrite() {
@@ -45,5 +39,18 @@ public class Writer extends Thread {
                 return randomChar + "";
         }
         return null;
+    }
+
+    private static synchronized void writeInFile(int writerNumber, String toWrite) {
+        try {
+            FileWriter fileWriter = new FileWriter("data.txt", true);
+            if (toWrite != null) {
+                fileWriter.write(toWrite);
+                fileWriter.close();
+                System.out.println(writerNumber + " wrote: \"" + toWrite + "\"");
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
