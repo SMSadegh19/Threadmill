@@ -84,3 +84,4 @@ fabric.properties
 .idea/modules.xml
 .idea/vcs.xml
 Threadmill.iml
+/data.txt
